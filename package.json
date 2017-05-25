@@ -1,0 +1,42 @@
+{
+  "name": "promise-map",
+  "version": "0.1.0",
+  "description": "A Map of resolve Promises",
+  "main": "dist/promise-map.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dash-OS/PromiseMap/"
+  },
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "cross-env BABEL_ENV=production NODE_ENV=production \"rimraf dist && webpack\""
+  },
+  "keywords": [
+    "Promise",
+    "Map",
+    "Set",
+    "ES6",
+    "Promise.all",
+    "async",
+    "utility"
+  ],
+  "author": "Braden R. Napier <brady.napier@dashos.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dash-OS/PromiseMap/issues"
+  },
+  "homepage": "https://github.com/Dash-OS/PromiseMap",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-babili": "^0.0.12",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babili-webpack-plugin": "^0.0.11",
+    "cross-env": "^4.0.0",
+    "rimraf": "^2.6.1",
+    "webpack": "^2.5.1"
+  },
+  "dependencies": {}
+}
