@@ -1,5 +1,8 @@
 # PromiseMap
 
+> **Note:** This documentation is unfinished and it will become its own package
+> once we have had the chance to complete it.  The package itself should be complete.
+
 ## Overview
 
 PromiseMap attempts to take the ideas of `Map` and `Promise` and combine them 
@@ -12,6 +15,18 @@ It does behave differently in a few aspects from `Map`.
   - Due to the above, we accept an array of keys to resolve / get
   - Values are resolved deeply if possible.
 
+### Installation
+
+```
+yarn add promise-map-es6
+```
+
+***OR***
+
+```
+npm install --save promise-map-es6
+```
+
 ## Simple Example
 
 ```javascript
@@ -23,7 +38,7 @@ export default timeoutPromised
 ```
 
 ```javascript
-import PromiseMap from 'PromiseMap'
+import PromiseMap from 'promise-map-es6'
 import timeoutPromised from './timeoutPromised'
 
 const P = new PromiseMap()
