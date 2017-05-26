@@ -55,7 +55,22 @@ P.then(result => console.log(result))
 
 > **Note:** All examples extend the example above by replacing the final function call.
 
-### Properties
+ - [PromiseMap.prototype.size](#PromiseMap.prototype.size)
+ - [PromiseMap.prototype.length](#PromiseMap.prototype.size)
+ - PromiseMap.prototype.forEach()
+ - PromiseMap.prototype.keys()
+ - PromiseMap.prototype.get(...keys)
+ - PromiseMap.prototype.set(key, promise)
+ - PromiseMap.prototype.push(...promises)
+ - PromiseMap.prototype.clear()
+ - PromiseMap.prototype.has(...keys)
+ - PromiseMap.prototype.entries(_?...keys?_)
+ - PromiseMap.prototype.then(function (resolve, reject))
+ - PromiseMap.prototype.catch()
+ - PromiseMap[Symbol.iterator]
+
+
+### Prototype Properties
 
 #### PromiseMap.prototype.size
 
@@ -65,9 +80,17 @@ Returns the number of key/value pairs in the PromiseMap object.
 P.size; // 3
 ```
 
-**returns** ***Number*** *Map.size*
-### Methods
+#### PromiseMap.prototype.length
 
+Synonymous with PromiseMap.prototype.size
+
+```js
+P.length; // 3
+```
+
+**returns** ***Number*** *Map.size*
+
+### Methods
 
 #### PromiseMap.prototype.clear()
 
