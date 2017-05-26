@@ -32,8 +32,6 @@ export default run({
 
 const handleQuery = {
   // &ip || &ip=208.80.152.201 --> { ip: { ...results }, ...rest }
-  ip: async (request) => {
-    return fetch(`http://ip-api.com/json/${request || ''}`).then(r => r.json())
-  },
+  ip: async (request) => fetch(`http://ip-api.com/json/${request || ''}`).then(r => r.json()),
   // ... handle as many queries as needed
 }
