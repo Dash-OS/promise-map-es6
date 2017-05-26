@@ -1,4 +1,4 @@
-import PromiseMap from './PromiseMap'
+import PromiseMap from 'promise-map-es6'
 import fetch from 'node-fetch'
 
 // Now lets take the fetch-example to another level.  We may want to 
@@ -14,8 +14,6 @@ ip.set('dns', fetch('http://edns.ip-api.com/json').then(r => r.json()))
 
 // Add our `ip` PromiseMap to our `result` PromiseMap.
 result.set('ip', ip)
-
-
 
 // Resolve the entire PromiseMap
 result.then(result => {

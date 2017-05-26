@@ -1,4 +1,4 @@
-import PromiseMap from '../lib/PromiseMap'
+import PromiseMap from 'promise-map-es6'
 import fetch from 'node-fetch'
 
 // Lets make some requests with fetch and add them to our PromiseMap
