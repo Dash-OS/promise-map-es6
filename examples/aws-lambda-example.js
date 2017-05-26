@@ -10,6 +10,10 @@ import PromiseMap from 'promise-map-es6'
   
   https://my.url/query?ip=208.80.152.201 -->
     {
+      "result": "success",
+      "query": {
+        "ip": "208.80.152.201"
+      },
       "ip": {
         "as":"AS14907 Wikimedia Foundation, Inc.",
         "city":"Cleveland",
@@ -58,6 +62,13 @@ export default run({
     before returning, but no response will be added to the caller.
   */
   
+  /*
+    We can also add data as a response to include.
+  */
+  return {
+    result: 'success',
+    query: queries
+  }
 })
 
 const handleQuery = {
