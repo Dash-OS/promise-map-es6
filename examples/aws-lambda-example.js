@@ -1,4 +1,5 @@
 import PromiseMap from 'promise-map-es6'
+import fetch from 'node-fetch'
 
 /*
   We use the aws-lambda-runner to simplify the execution and handling of our
@@ -32,9 +33,10 @@ import PromiseMap from 'promise-map-es6'
       }
     }
 */
+// https://github.com/Dash-OS/aws-lambda-runner
 import run from 'aws-lambda-runner'
+// https://github.com/Dash-OS/aws-lambda-runner/tree/master/extras/plugins/PromiseMapPlugin
 import PromiseMapPlugin from 'runner-promise-map-plugin'
-import fetch from 'node-fetch'
 
 export default run({
   plugins: [
