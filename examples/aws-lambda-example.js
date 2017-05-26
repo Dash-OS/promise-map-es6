@@ -52,6 +52,12 @@ export default run({
     }
   }
   
+  /*
+    If we have any tasks that should be completed before returning to the caller,
+    we can add them using config.promises.push(...promises) - these will resolve 
+    before returning, but no response will be added to the caller.
+  */
+  
 })
 
 const handleQuery = {
