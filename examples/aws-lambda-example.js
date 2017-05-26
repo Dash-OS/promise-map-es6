@@ -3,6 +3,30 @@ import PromiseMap from 'promise-map-es6'
 /*
   We use the aws-lambda-runner to simplify the execution and handling of our
   request.  It is utilizing the PromiseMapPlugin.
+  
+  This lambda will parse the url queries ?query=value&... and respond with a mapping 
+  of the results of each query to the user.  We have one handler but can add however 
+  many as needed.
+  
+  https://my.url/query?ip=208.80.152.201 -->
+    {
+      "ip": {
+        "as":"AS14907 Wikimedia Foundation, Inc.",
+        "city":"Cleveland",
+        "country":"United States",
+        "countryCode":"US",
+        "isp":"Wikimedia Foundation, Inc.",
+        "lat":41.4995,
+        "lon":-81.6954,
+        "org":"Wikimedia Foundation, Inc.",
+        "query":"208.80.152.201",
+        "region":"OH",
+        "regionName":"Ohio",
+        "status":"success",
+        "timezone":"America/New_York",
+        "zip":"44192"
+      }
+    }
 */
 import run from 'aws-lambda-runner'
 import PromiseMapPlugin from 'runner-promise-map-plugin'
