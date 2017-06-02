@@ -74,6 +74,8 @@ P.then(result => console.log(result))
 
 ### Prototype Properties
 
+---
+
 #### PromiseMap.prototype.size
 
 Returns the number of key/value pairs in the PromiseMap object.
@@ -81,6 +83,8 @@ Returns the number of key/value pairs in the PromiseMap object.
 ```js
 P.size; // 3
 ```
+
+---
 
 #### PromiseMap.prototype.length
 
@@ -92,7 +96,11 @@ P.length; // 3
 
 **returns** ***Number*** *Map.size*
 
-### Methods
+---
+
+## Methods
+
+---
 
 #### PromiseMap.prototype.clear()
 
@@ -107,6 +115,8 @@ P.size; // 0
 
 **returns** _undefined_
 
+---
+
 #### PromiseMap.prototype.delete(...keys)
 
 Deletes the given key(s) and returns the result for each.  Each result is the 
@@ -120,6 +130,8 @@ P.size; // 1
 ```
 
 **returns** ***Array*** *keys.map(k => Map.delete(k))*
+
+---
 
 #### PromiseMap.prototype.entries(?...keys?)
 
@@ -143,6 +155,8 @@ P.size; // 1
 
 **returns** ***Promise*** *.then(entries)*
 
+---
+
 #### PromiseMap.prototype.get(...keys)
 
 Returns a Promise which resolves with an object that represents the resolved key/value pairs 
@@ -155,6 +169,8 @@ P.size; // 2
 
 **returns** ***Promise*** *.then(result)*
 
+---
+
 #### PromiseMap.prototype.set(key, promise)
 
 Sets a key on the PromiseMap.  When the PromiseMap resolves, the resolved value of the 
@@ -165,6 +181,8 @@ P.set('qux', timeoutPromised(() => 4, 3000)); // { foo: 1, bar: 2, baz: 3, qux: 
 ```
 
 **returns** ***PromiseMap***
+
+---
 
 #### PromiseMap.prototype.merge(promises)
 
@@ -179,6 +197,8 @@ P.merge({
 
 **returns** ***PromiseMap***
 
+---
+
 #### PromiseMap.prototype.has(...keys)
 
 Returns _Boolean_ whether all given keys are within the `PromiseMap`. 
@@ -191,6 +211,7 @@ P.has('foo', 'bar', 'blah'); // false
 
 **returns** ***Boolean*** *keys.every(k => Map.has(k))*
 
+---
 
 #### PromiseMap.prototype.push(...promises)
 
@@ -208,6 +229,7 @@ P.then(result => console.log(result))
 
 **returns** ***undefined***
 
+---
 
 #### PromiseMap.prototype.then(onResolve, onReject)
 
@@ -219,6 +241,8 @@ P.then(result => console.log(result)); // { foo: 1, bar: 2, baz: 3 }
 P.size; // 0
 ```
 **returns** ***Promise*** *.then(result, error)*
+
+---
 
 #### PromiseMap.prototype.catch(fn)
 
@@ -233,3 +257,5 @@ P.size; // 0
 ```
 
 **returns** ***Promise***
+
+---
