@@ -71,6 +71,7 @@ P.then(result => console.log(result))
  - PromiseMap.prototype.catch()
  - PromiseMap[Symbol.iterator]
 
+---
 
 ### Prototype Properties
 
@@ -98,7 +99,7 @@ P.length; // 3
 
 ---
 
-## Methods
+### Methods
 
 ---
 
