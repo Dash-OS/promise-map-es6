@@ -1,6 +1,6 @@
 {
   "name": "promise-map-es6",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Map of resolve Promises",
   "main": "dist/promise-map.js",
   "repository": {

@@ -51,6 +51,7 @@ P.then(result => console.log(result))
 // after 3 seconds: { foo: 1, bar: 2, baz: 3 }
 ```
 
+
 ## PromiseMap Syntax
 
 > **Note:** All examples extend the example above by replacing the final function call.
@@ -61,6 +62,7 @@ P.then(result => console.log(result))
  - PromiseMap.prototype.keys()
  - PromiseMap.prototype.get(...keys)
  - PromiseMap.prototype.set(key, promise)
+ - PromiseMap.prototype.merge(promises)
  - PromiseMap.prototype.push(...promises)
  - PromiseMap.prototype.clear()
  - PromiseMap.prototype.has(...keys)
@@ -152,6 +154,30 @@ P.size; // 2
 ```
 
 **returns** ***Promise*** *.then(result)*
+
+#### PromiseMap.prototype.set(key, promise)
+
+Sets a key on the PromiseMap.  When the PromiseMap resolves, the resolved value of the 
+promise will be available on that key of the object. 
+
+```js
+P.set('qux', timeoutPromised(() => 4, 3000)); // { foo: 1, bar: 2, baz: 3, qux: 4 }
+```
+
+**returns** ***PromiseMap***
+
+#### PromiseMap.prototype.merge(promises)
+
+Takes a plain object of key/promise pairs and runs PromiseMap.set(key, promise) on each.
+Note that it is an error to set a key which already exists on the PromiseMap. 
+
+```js
+P.merge({ 
+  qux: timeoutPromised(() => 4, 3000) 
+}).then(result => console.log(result)); // { foo: 1, bar: 2, baz: 3, qux: 4 }
+```
+
+**returns** ***PromiseMap***
 
 #### PromiseMap.prototype.has(...keys)
 
