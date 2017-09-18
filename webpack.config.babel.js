@@ -1,12 +1,10 @@
 // NOTE: paths are relative to each functions folder
 import path from 'path';
 import Webpack from 'webpack';
-import BabiliPlugin from 'babili-webpack-plugin'
+// import BabiliPlugin from 'babili-webpack-plugin';
 
 export default {
-  entry: [
-    './lib/PromiseMap.js',
-  ],
+  entry: ['./lib/PromiseMap.js'],
   target: 'async-node',
   output: {
     path: path.join(__dirname, 'dist'),
@@ -16,25 +14,28 @@ export default {
   module: {
     rules: [
       {
-        test:     /\.js$/,
+        test: /\.js$/,
         exclude: /node_modules/,
-        use:     [ {
-          loader: 'babel-loader' ,
-          options: {
-            // Don't use the babelrc file!
-            babelrc: false,
-            presets: [
-              'stage-0',
-              // Setup for TreeShaking
-              ['env', {
-                modules: false,
-              }],
-            ],
-            plugins: [
-              'transform-class-properties'
-            ]
-          }
-        } ],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              // Don't use the babelrc file!
+              babelrc: false,
+              presets: [
+                'stage-0',
+                // Setup for TreeShaking
+                [
+                  'env',
+                  {
+                    modules: false,
+                  },
+                ],
+              ],
+              plugins: ['transform-class-properties'],
+            },
+          },
+        ],
       },
     ],
   },
@@ -74,4 +75,4 @@ export default {
       },
     }),
   ],
-}
+};
