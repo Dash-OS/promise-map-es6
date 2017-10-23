@@ -5,8 +5,8 @@
 
 ## Overview
 
-PromiseMap attempts to take the ideas of `Map` and `Promise` and combine them 
-into a useful tool for handling situations where you may be working with multiple 
+PromiseMap attempts to take the ideas of `Map` and `Promise` and combine them
+into a useful tool for handling situations where you may be working with multiple
 promises simultaneously.
 
 It does behave differently in a few aspects from `Map`.
@@ -14,6 +14,7 @@ It does behave differently in a few aspects from `Map`.
   - Consuming (getting) values removes them from the Map once resolved.
   - Due to the above, we accept an array of keys to resolve / get
   - Values are resolved deeply if possible.
+  - Values resolve until there are not any more promises.  This means that if the promises continue to add to the same promise map it will never resolve itself since it will continually attempt to resolve the new promises until none remain (think of it like a short-lived event loop resolving to a value).
 
 ### Installation
 
@@ -31,9 +32,16 @@ npm install --save promise-map-es6
 
 ```javascript
 // assuming timeoutPromised() is:
-const timeoutPromised = (fn, delay) => new Promise((resolve, reject) => {
-  setTimeout(() => { try { resolve(fn()) } catch (e) { reject(e) } }, delay)
-})
+const timeoutPromised = (fn, delay) =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        resolve(fn());
+      } catch (e) {
+        reject(e);
+      }
+    }, delay);
+  });
 export default timeoutPromised
 ```
 
@@ -105,7 +113,7 @@ P.length; // 3
 
 #### PromiseMap.prototype.clear()
 
-Removes all key/value pairs from the PromiseMap object.  All promises are simply 
+Removes all key/value pairs from the PromiseMap object.  All promises are simply
 ignored without resolution since Promises are not cancellable by design.
 
 ```js
@@ -120,8 +128,8 @@ P.size; // 0
 
 #### PromiseMap.prototype.delete(...keys)
 
-Deletes the given key(s) and returns the result for each.  Each result is the 
-result of running the [`delete`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/delete) 
+Deletes the given key(s) and returns the result for each.  Each result is the
+result of running the [`delete`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/delete)
 method on the underlying `Map`.
 
 ```js
@@ -136,8 +144,8 @@ P.size; // 1
 
 #### PromiseMap.prototype.entries(?...keys?)
 
-Returns a Promise which resolves to a standard `entries()` result where each value 
-is resolved.  If *keys* is provided then only the given keys will be resolved.  All 
+Returns a Promise which resolves to a standard `entries()` result where each value
+is resolved.  If *keys* is provided then only the given keys will be resolved.  All
 resolved values are removed from the `PromiseMap` once consumed.
 
 ```js
@@ -160,7 +168,7 @@ P.size; // 1
 
 #### PromiseMap.prototype.get(...keys)
 
-Returns a Promise which resolves with an object that represents the resolved key/value pairs 
+Returns a Promise which resolves with an object that represents the resolved key/value pairs
 that were requested.  All resolved values are removed from the `PromiseMap` once consumed.
 
 ```js
@@ -174,8 +182,8 @@ P.size; // 2
 
 #### PromiseMap.prototype.set(key, promise)
 
-Sets a key on the PromiseMap.  When the PromiseMap resolves, the resolved value of the 
-promise will be available on that key of the object. 
+Sets a key on the PromiseMap.  When the PromiseMap resolves, the resolved value of the
+promise will be available on that key of the object.
 
 ```js
 P.set('qux', timeoutPromised(() => 4, 3000)); // { foo: 1, bar: 2, baz: 3, qux: 4 }
@@ -188,11 +196,11 @@ P.set('qux', timeoutPromised(() => 4, 3000)); // { foo: 1, bar: 2, baz: 3, qux: 
 #### PromiseMap.prototype.merge(promises)
 
 Takes a plain object of key/promise pairs and runs PromiseMap.set(key, promise) on each.
-Note that it is an error to set a key which already exists on the PromiseMap. 
+Note that it is an error to set a key which already exists on the PromiseMap.
 
 ```js
-P.merge({ 
-  qux: timeoutPromised(() => 4, 3000) 
+P.merge({
+  qux: timeoutPromised(() => 4, 3000)
 }).then(result => console.log(result)); // { foo: 1, bar: 2, baz: 3, qux: 4 }
 ```
 
@@ -202,7 +210,7 @@ P.merge({
 
 #### PromiseMap.prototype.has(...keys)
 
-Returns _Boolean_ whether all given keys are within the `PromiseMap`. 
+Returns _Boolean_ whether all given keys are within the `PromiseMap`.
 
 ```js
 P.has('foo'); // true
@@ -216,9 +224,9 @@ P.has('foo', 'bar', 'blah'); // false
 
 #### PromiseMap.prototype.push(...promises)
 
-Pushes new promises into the map.  These promises will be resolved with the `PromiseMap` but 
-their responses will not be added to the final object.  This is useful if you want to make 
-sure a given task is complete before resolving your final object, but don't want its resolved 
+Pushes new promises into the map.  These promises will be resolved with the `PromiseMap` but
+their responses will not be added to the final object.  This is useful if you want to make
+sure a given task is complete before resolving your final object, but don't want its resolved
 value to be included in the resulting object.
 
 ```js
@@ -234,8 +242,9 @@ P.then(result => console.log(result))
 
 #### PromiseMap.prototype.then(onResolve, onReject)
 
-Resolves the entire PromiseMap and returns the result.  PromiseMap will be empty once completed. 
-Note that the second argument (onReject) is better handled by chaining a .catch().
+Resolves the entire PromiseMap and returns the result.  PromiseMap will be empty once completed. Note that the second argument (onReject) is better handled by chaining a .catch().
+
+> In addition to resolving the promises within the PromiseMap, this will also resolve any Promises which are added to the PromiseMap during the resolution itself.
 
 ```js
 P.then(result => console.log(result)); // { foo: 1, bar: 2, baz: 3 }
@@ -247,8 +256,8 @@ P.size; // 0
 
 #### PromiseMap.prototype.catch(fn)
 
-Resolves the entire PromiseMap and only registers a callback to occur should an error be 
-caught while resolving the values.  Note that since this consumes the values you will not 
+Resolves the entire PromiseMap and only registers a callback to occur should an error be
+caught while resolving the values.  Note that since this consumes the values you will not
 be able to retrieve them when using this method.
 
 ```js
